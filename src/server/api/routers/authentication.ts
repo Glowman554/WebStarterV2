@@ -67,7 +67,6 @@ export const authenticationRouter = router({
         .input(z.object({ username: z.string(), password: z.string() }))
         .mutation(async ({ input, ctx }) => {
             const user = await db.select().from(users).where(eq(users.username, input.username)).get();
-            console.log(user);
             if (!user || !compareSync(input.password, user.passwordHash)) {
                 throw new Error('Invalid username or password');
             }
